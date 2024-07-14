@@ -3,13 +3,13 @@
     enable = true;
     settings = {
       mapping = {
-        "<C-Space>" = "cmp.mapping.complete()";
-        "<C-e>" = "cmp.mapping.close()";
-        "<C-CR>" = "cmp.mapping.confirm({ select = true })";
-        "<C-u>" = "cmp.mapping.scroll_docs(-4)";
-        "<C-d>" = "cmp.mapping.scroll_docs(4)";
-        "<C-p>" = "cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' })";
-        "<C-n>" = "cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })";
+        "<c-Space>" = "cmp.mapping.complete()";
+        "<c-e>" = "cmp.mapping.close()";
+        "<c-CR>" = "cmp.mapping.confirm({ select = true })";
+        "<c-u>" = "cmp.mapping.scroll_docs(-4)";
+        "<c-d>" = "cmp.mapping.scroll_docs(4)";
+        "<c-p>" = "cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' })";
+        "<c-n>" = "cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })";
       };
       sources = [
         {
@@ -38,12 +38,12 @@
   # Set bindings for snippet expansion / jumping
   programs.nixvim.extraConfigLua = ''
     local ls = require("luasnip");
-    vim.keymap.set({ "i", "s" }, "<Tab>", function()
+    vim.keymap.set({ "i", "s" }, "<c-Tab>", function()
       if ls.expand_or_jumpable() then
         ls.expand_or_jump()
       end
     end, { silent = true });
-    vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+    vim.keymap.set({ "i", "s" }, "<cs-Tab>", function()
       if ls.jumpable(-1) then
         ls.jump(-1)
       end
