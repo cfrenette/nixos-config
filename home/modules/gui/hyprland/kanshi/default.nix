@@ -22,7 +22,7 @@
             criteria = "ASUSTek COMPUTER INC ASUS VG289 0x0002AD32";
             position = "0,0";
             mode = "3840x2160";
-            adaptiveSync = true;
+            # adaptiveSync = true;
             scale = 2.0;
             status = "enable";
           }
@@ -30,7 +30,7 @@
             criteria = "ASUSTek COMPUTER INC ASUS VG289 0x0002AD37";
             position = "1920,0";
             mode = "3840x2160";
-            adaptiveSync = true;
+            # adaptiveSync = true;
             scale = 2.0;
             status = "enable";
           }
