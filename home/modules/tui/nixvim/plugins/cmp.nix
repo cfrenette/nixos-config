@@ -5,7 +5,7 @@
       mapping = {
         "<C-Space>" = "cmp.mapping.complete()";
         "<C-e>" = "cmp.mapping.close()";
-        "<C-y>" = "cmp.mapping.confirm({ select = true })";
+        "<C-CR>" = "cmp.mapping.confirm({ select = true })";
         "<C-u>" = "cmp.mapping.scroll_docs(-4)";
         "<C-d>" = "cmp.mapping.scroll_docs(4)";
         "<C-p>" = "cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' })";
@@ -34,5 +34,20 @@
   programs.nixvim.plugins.luasnip = {
     enable = true;
   };
+
+  # Set bindings for snippet expansion / jumping
+  programs.nixvim.extraConfigLua = ''
+    local ls = require("luasnip");
+    vim.keymap.set({ "i", "s" }, "<Tab>", function()
+      if ls.expand_or_jumpable() then
+        ls.expand_or_jump()
+      end
+    end, { silent = true });
+    vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+      if ls.jumpable(-1) then
+        ls.jump(-1)
+      end
+    end, { silent = true });
+  '';
 }
 
