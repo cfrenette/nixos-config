@@ -21,6 +21,8 @@
       termguicolors = true;
       signcolumn = "yes";
       scrolloff = 5;
+      cursorline = true;
+      cursorlineopt = "number";
     };
   };
 }
