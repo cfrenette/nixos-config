@@ -43,6 +43,12 @@
       url = "git+ssh://git@github.com/cfrenette/nix-secrets.git?ref=main&shallow=1";
       flake = false;
     };
+
+    # WSL
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, ... } @inputs:
@@ -73,6 +79,16 @@
     {
       nixosConfigurations = {
         frmwrk = mkHost "frmwrk" "x86_64-linux";
+        wsl = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            inputs.nixos-wsl.nixosModules.default
+            {
+              system.stateVersion = "24.05";
+              wsl.enable = true;
+            }
+          ];
+        };
       };
     };
 }

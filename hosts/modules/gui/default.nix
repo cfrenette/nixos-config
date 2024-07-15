@@ -1,8 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [
     #./gnome
     ./hyprland
+    ./qmk.nix
     ./stylix.nix
   ];
 
