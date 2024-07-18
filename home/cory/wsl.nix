@@ -8,6 +8,11 @@
   # Enable Home Manager
   programs.home-manager.enable = true;
 
+  programs.git = {
+    enable = true;
+    # TODO: configure signing
+  };
+
   # The managed user
   home = {
     username = "cory";

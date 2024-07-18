@@ -6,6 +6,8 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  wsl.defaultUser = "cory";
+
   # Set hostname
   networking.hostName = "wsl";
 

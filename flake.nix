@@ -58,37 +58,42 @@
         nixpkgs.lib.nixosSystem {
           system = "${arch}";
           specialArgs.inputs = inputs;
-          modules = [
-            # System Configuration
-            ./hosts/${hostname}/configuration.nix
+          modules =
+            let
+              extraModules =
+                if hostname != "wsl"
+                then [ ]
+                else
+                  [
+                    # WSL Flake
+                    inputs.nixos-wsl.nixosModules.default
+                    {
+                      system.stateVersion = "24.05";
+                      wsl.enable = true;
+                    }
+                  ];
+            in
+            [
+              # System Configuration
+              ./hosts/${hostname}/configuration.nix
 
-            # Home Manager Configuration
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.cory.imports = [ ./home/cory/${hostname}.nix ];
-                extraSpecialArgs.inputs = inputs;
-              };
-            }
-
-          ];
+              # Home Manager Configuration
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users.cory.imports = [ ./home/cory/${hostname}.nix ];
+                  extraSpecialArgs.inputs = inputs;
+                };
+              }
+            ] ++ extraModules;
         };
     in
     {
       nixosConfigurations = {
         frmwrk = mkHost "frmwrk" "x86_64-linux";
-        wsl = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            inputs.nixos-wsl.nixosModules.default
-            {
-              system.stateVersion = "24.05";
-              wsl.enable = true;
-            }
-          ];
-        };
+        wsl = mkHost "wsl" "x86_64-linux";
       };
     };
 }
