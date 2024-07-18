@@ -9,9 +9,6 @@
     ./treesitter.nix
   ];
 
-  # disable stylix (the plugin is better)
-  stylix.targets.nixvim.enable = false;
-
   programs.nixvim = {
     # Sainnhe's version
     extraPlugins = [ pkgs.vimPlugins.gruvbox-material ];
