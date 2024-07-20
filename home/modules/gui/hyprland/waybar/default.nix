@@ -32,10 +32,8 @@
         active-only = true;
       };
       clock = {
-        calendar = {
-          format = { today = "{}"; };
-        };
-        format = "{:%I:%M %p}";
+        format = "{:%a, %b %d %I:%M %p}";
+        tooltip = true;
       };
       tray = {
         icon-size = 15;
