@@ -4,8 +4,9 @@
     ./alacritty.nix
     ./firefox.nix
     ./gtk.nix
-    ./mumble.nix
     ./hyprland
+    ./mumble.nix
+    ./stylix.nix
   ];
 
   home.packages = with pkgs; [
@@ -14,7 +15,5 @@
     # Community-packaged Discord
     vesktop
   ];
-
-  stylix.targets.vesktop.enable = true;
 }
 
