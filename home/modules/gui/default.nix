@@ -4,7 +4,7 @@
     ./alacritty.nix
     ./firefox.nix
     ./gtk.nix
-    ./hyprland
+    #./hyprland
     ./mumble.nix
     ./stylix.nix
   ];

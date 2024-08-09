@@ -2,7 +2,8 @@
 {
   imports = [
     #./gnome
-    ./hyprland
+    #./hyprland
+    ./cosmic
     ./qmk.nix
     ./stylix.nix
   ];

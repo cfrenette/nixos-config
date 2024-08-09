@@ -27,6 +27,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # COSMIC Flake
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Nixvim (Neovim configured with nix)
     nixvim = {
       url = "github:nix-community/nixvim/nixos-24.05";
@@ -62,7 +68,15 @@
             let
               extraModules =
                 if hostname != "wsl"
-                then [ ]
+                then [
+                  {
+                    nix.settings = {
+                      substituters = [ "https://cosmic.cachix.org/" ];
+                      trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+                    };
+                  }
+                  inputs.nixos-cosmic.nixosModules.default
+                ]
                 else
                   [
                     # WSL Flake
