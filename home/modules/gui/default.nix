@@ -11,6 +11,7 @@
 
   home.packages = with pkgs; [
     bitwarden-desktop
+    fractal
     ffmpeg
     # Community-packaged Discord
     vesktop
