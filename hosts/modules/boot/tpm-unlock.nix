@@ -26,8 +26,5 @@
       "tpm_crb"
     ];
   };
-
-  # Add debug param to diagnose TPM2 problems
-  boot.kernelParams = [ "debug" ];
 }
 
