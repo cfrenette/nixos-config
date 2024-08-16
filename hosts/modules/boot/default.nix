@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   imports = [
     ./tpm-unlock.nix
@@ -11,6 +12,10 @@
       "sd_mod"
     ];
     kernelModules = [ "kvm-amd" ];
+    kernelParams = [
+      "boot.shell_on_fail"
+    ];
+    loader.timeout = 0;
   };
 }
 
