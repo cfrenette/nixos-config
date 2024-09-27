@@ -30,7 +30,7 @@
     # COSMIC Flake
     nixos-cosmic = {
       url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos-cosmic/nixpkgs-stable";
     };
 
     # Nixvim (Neovim configured with nix)
