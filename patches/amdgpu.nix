@@ -29,7 +29,7 @@ pkgs.stdenv.mkDerivation {
   '';
 
   meta = {
-    description = "AMD display kernel module overlay-planes patch";
+    description = "AMD display kernel module MST patch";
     license = lib.licenses.gpl2;
   };
 }
