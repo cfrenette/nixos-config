@@ -25,6 +25,11 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # Enable MDNS
+  services.avahi = {
+    enable = true;
+  };
+
   # Enable PPD (power profiles)
   services.power-profiles-daemon.enable = true;
 
