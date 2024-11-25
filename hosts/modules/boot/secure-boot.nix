@@ -9,16 +9,16 @@ in
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
   boot = {
-    kernelPackages =
+    kernelPackages = 
       let
         linux_6_12_pkg = { fetchurl, buildLinux, ... } @ args:
           buildLinux (args // rec {
             src = fetchurl {
-              url = "https://git.kernel.org/torvalds/t/linux-6.12-rc7.tar.gz";
-              sha256 = "sha256-hYHy81vx++0nGt1a9zz9iMKZorO+RmgRARaYdEPKo2E=";
+              url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.tar.xz";
+              sha256 = "sha256-saJWK+VuQq+z+EidTCp6xHKsIwmPHvHB5A2mAfVGJes=";
             };
             dontStrip = true;
-            version = "6.12.0-rc7";
+            version = "6.12.0";
             modDirVersion = version;
           } // (args.argsOverride or { }));
         linux_6_12 = pkgs.callPackage linux_6_12_pkg { };
@@ -30,6 +30,8 @@ in
       (amdgpu-kernel-module.overrideAttrs (_: {
         patches = [
           ../../../patches/mst-patch_6-12-rc6.patch
+          #../../../patches/0001-drm-amd-display-Fix-incorrect-DSC-recompute-trigger.patch
+          #../../../patches/0002-drm-amd-display-Skip-Invalid-Streams-from-DSC-Policy.patch
           ../../../patches/overlay-planes-patch_6-12-rc6.patch
         ];
       }))
