@@ -9,21 +9,7 @@ in
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
   boot = {
-    kernelPackages =
-      let
-        linux_6_12_pkg = { fetchurl, buildLinux, ... } @ args:
-          buildLinux (args // rec {
-            src = fetchurl {
-              url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.tar.xz";
-              sha256 = "sha256-saJWK+VuQq+z+EidTCp6xHKsIwmPHvHB5A2mAfVGJes=";
-            };
-            dontStrip = true;
-            version = "6.12.0";
-            modDirVersion = version;
-          } // (args.argsOverride or { }));
-        linux_6_12 = pkgs.callPackage linux_6_12_pkg { };
-      in
-      pkgs.recurseIntoAttrs (pkgs.linuxPackagesFor linux_6_12);
+    kernelPackages = pkgs.linuxPackages_6_12;
 
     # Patch AMDGPU for overlay planes bug
     extraModulePackages = [
