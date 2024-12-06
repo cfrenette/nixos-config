@@ -50,11 +50,6 @@
       flake = false;
     };
 
-    # WSL
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = { nixpkgs, home-manager, ... } @inputs:
@@ -65,29 +60,16 @@
           system = "${arch}";
           specialArgs.inputs = inputs;
           modules =
-            let
-              extraModules =
-                if hostname != "wsl"
-                then [
-                  {
-                    nix.settings = {
-                      substituters = [ "https://cosmic.cachix.org/" ];
-                      trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-                    };
-                  }
-                  inputs.nixos-cosmic.nixosModules.default
-                ]
-                else
-                  [
-                    # WSL Flake
-                    inputs.nixos-wsl.nixosModules.default
-                    {
-                      system.stateVersion = "24.05";
-                      wsl.enable = true;
-                    }
-                  ];
-            in
             [
+              # Cosmic
+              {
+                nix.settings = {
+                  substituters = [ "https://cosmic.cachix.org/" ];
+                  trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+                };
+              }
+              inputs.nixos-cosmic.nixosModules.default
+
               # System Configuration
               ./hosts/${hostname}/configuration.nix
 
@@ -101,13 +83,12 @@
                   extraSpecialArgs.inputs = inputs;
                 };
               }
-            ] ++ extraModules;
+            ];
         };
     in
     {
       nixosConfigurations = {
         frmwrk = mkHost "frmwrk" "x86_64-linux";
-        wsl = mkHost "wsl" "x86_64-linux";
       };
     };
 }
