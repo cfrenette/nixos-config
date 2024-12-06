@@ -9,7 +9,7 @@ in
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
   boot = {
-    kernelPackages = 
+    kernelPackages =
       let
         linux_6_12_pkg = { fetchurl, buildLinux, ... } @ args:
           buildLinux (args // rec {
@@ -29,10 +29,8 @@ in
     extraModulePackages = [
       (amdgpu-kernel-module.overrideAttrs (_: {
         patches = [
-          ../../../patches/mst-patch_6-12-rc6.patch
-          #../../../patches/0001-drm-amd-display-Fix-incorrect-DSC-recompute-trigger.patch
-          #../../../patches/0002-drm-amd-display-Skip-Invalid-Streams-from-DSC-Policy.patch
-          ../../../patches/overlay-planes-patch_6-12-rc6.patch
+          ../../../patches/temp-revert-338567d1762/mst-patch_6-12-rc6.patch
+          ../../../patches/temp-fix-amdgpu-issue-3693/overlay-planes-patch_6-12-rc6.patch
         ];
       }))
     ];
