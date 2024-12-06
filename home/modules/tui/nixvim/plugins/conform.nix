@@ -1,13 +1,15 @@
 {
   programs.nixvim.plugins.conform-nvim = {
     enable = true;
-    formattersByFt = {
-      nix = [ "nixpkgs-fmt" ];
-      rust = [ "rustfmt" ];
-    };
-    formatOnSave = {
-      lspFallback = true;
-      timeoutMs = 500;
+    settings = {
+      formatters_by_ft = {
+        nix = [ "nixpkgs-fmt" ];
+        rust = [ "rustfmt" ];
+      };
+      format_on_save = {
+        lspFallback = true;
+        timeoutMs = 500;
+      };
     };
   };
 }

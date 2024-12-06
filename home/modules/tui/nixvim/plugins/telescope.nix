@@ -18,5 +18,10 @@
     #  ui-select.enable = true;
     # };
   };
+
+  # Suppress warning about deprecated behavior
+  programs.nixvim.plugins.web-devicons = {
+    enable = false;
+  };
 }
 

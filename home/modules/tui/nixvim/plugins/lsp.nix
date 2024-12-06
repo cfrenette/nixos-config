@@ -32,13 +32,13 @@
         enable = true;
       };
       bashls.enable = true;
-      rust-analyzer = {
+      rust_analyzer = {
         enable = true;
         # Use the more up-to-date versions in a devshell
         installRustc = false;
         installCargo = false;
       };
-      tsserver.enable = true;
+      ts_ls.enable = true;
       yamlls.enable = true;
     };
   };

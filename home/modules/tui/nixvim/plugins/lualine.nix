@@ -2,16 +2,19 @@
   programs.nixvim = {
     plugins.lualine = {
       enable = true;
-      iconsEnabled = false;
-      componentSeparators = {
-        left = "";
-        right = "";
+      settings = {
+        options = {
+          componentSeparators = {
+            left = "";
+            right = "";
+          };
+          iconsEnabled = false;
+          sectionSeparators = {
+            left = "";
+            right = "";
+          };
+        };
       };
-      sectionSeparators = {
-        left = "";
-        right = "";
-      };
-      # theme = "gruvbox-material";
     };
     # Mode is already shown in Lualine
     opts = {
