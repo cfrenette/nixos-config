@@ -7,7 +7,7 @@
         rust = [ "rustfmt" ];
       };
       format_on_save = {
-        lspFallback = true;
+        lsp_format = "never";
         timeoutMs = 500;
       };
     };

@@ -2,10 +2,7 @@
 {
   programs.nixvim.plugins.lsp = {
     enable = true;
-    # FIXME:
-    # Not yet available in 24.05 stable
-    # https://github.com/nix-community/nixvim/pull/1655
-    # inlayHints = true;
+    inlayHints = false;
 
     keymaps = {
       diagnostic = {

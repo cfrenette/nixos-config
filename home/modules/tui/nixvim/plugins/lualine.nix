@@ -4,12 +4,12 @@
       enable = true;
       settings = {
         options = {
-          componentSeparators = {
+          component_separators = {
             left = "";
             right = "";
           };
-          iconsEnabled = false;
-          sectionSeparators = {
+          icons_enabled = false;
+          section_separators = {
             left = "";
             right = "";
           };
