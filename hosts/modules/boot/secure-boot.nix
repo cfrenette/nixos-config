@@ -15,7 +15,7 @@ in
     extraModulePackages = [
       (amdgpu-kernel-module.overrideAttrs (_: {
         patches = [
-          ../../../patches/temp-revert-338567d1762/mst-patch_6-12-rc6.patch
+          ../../../patches/temp-revert-338567d1762/0001-revert-338567d1762-for-MST-temp-fix.patch
           ../../../patches/test-overlay-planes-pf-fix/0001-drm-amd-display-fix-page-fault-due-to-max-surface-de.patch
           ../../../patches/test-overlay-planes-pf-fix/0002-drm-amd-display-increase-MAX_SURFACES-to-the-value-s.patch
         ];
