@@ -15,7 +15,10 @@ in
     extraModulePackages = [
       (amdgpu-kernel-module.overrideAttrs (_: {
         patches = [
-          ../../../patches/temp-revert-338567d1762/0001-revert-338567d1762-for-MST-temp-fix.patch
+          #../../../patches/temp-revert-338567d1762/0001-revert-338567d1762-for-MST-temp-fix.patch
+          ../../../patches/test-regression-fix/0003-drm-amd-display-Don-t-write-DP_MSTM_CTRL-after-LT.patch
+          ../../../patches/test-regression-fix/0004-drm-amdgpu-display-Fix-pbn-kbps-Conversion.patch
+          ../../../patches/test-regression-fix/0005-drm-amd-display-Resort-to-dc-to-Compute-Native-MST-B.patch
           ../../../patches/test-overlay-planes-pf-fix/0001-drm-amd-display-fix-page-fault-due-to-max-surface-de.patch
           ../../../patches/test-overlay-planes-pf-fix/0002-drm-amd-display-increase-MAX_SURFACES-to-the-value-s.patch
         ];
