@@ -16,8 +16,6 @@ in
       (amdgpu-kernel-module.overrideAttrs (_: {
         patches = [
           ../../../patches/test-regression-fix/0004-drm-amdgpu-display-Fix-pbn-kbps-Conversion.patch
-          ../../../patches/test-overlay-planes-pf-fix/0001-drm-amd-display-fix-page-fault-due-to-max-surface-de.patch
-          ../../../patches/test-overlay-planes-pf-fix/0002-drm-amd-display-increase-MAX_SURFACES-to-the-value-s.patch
         ];
       }))
     ];
