@@ -2,7 +2,8 @@
 {
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "IntelOneMono" "FiraMono" ]; })
+    nerd-fonts.intone-mono
+    nerd-fonts.fira-mono
   ];
 }
 

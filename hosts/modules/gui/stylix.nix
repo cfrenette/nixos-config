@@ -21,11 +21,6 @@
       popups = 0.6;
     };
 
-    cursor = {
-      package = pkgs.capitaine-cursors-themed;
-      name = "Capitaine Cursors (Gruvbox)";
-    };
-
     fonts = {
       sansSerif = {
         package = pkgs.fira;
@@ -33,7 +28,7 @@
       };
       serif = config.stylix.fonts.sansSerif;
       monospace = {
-        package = pkgs.nerdfonts.override { fonts = [ "FiraMono" ]; };
+        package = pkgs.nerd-fonts.fira-mono;
         name = "FiraMono Nerd Font Mono";
       };
     };
