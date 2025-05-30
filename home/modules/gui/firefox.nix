@@ -13,7 +13,7 @@
       search = {
         # Firefox tweaks this setting a lot, necessary to wipe tweaks and regenerate
         force = true;
-        default = "DuckDuckGo";
+        default = "ddg";
         engines = {
           "Nix Packages" = {
             urls = [{
