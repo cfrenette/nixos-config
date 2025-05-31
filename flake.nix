@@ -27,12 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # COSMIC Flake
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixos-cosmic/nixpkgs-stable";
-    };
-
     # Custom Nixvim Flake 
     nixvim = {
       url = "github:cfrenette/nvim";
@@ -61,15 +55,6 @@
           specialArgs.inputs = inputs;
           modules =
             [
-              # Cosmic
-              {
-                nix.settings = {
-                  substituters = [ "https://cosmic.cachix.org/" ];
-                  trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-                };
-              }
-              inputs.nixos-cosmic.nixosModules.default
-
               # System Configuration
               ./hosts/${hostname}/configuration.nix
 
