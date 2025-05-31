@@ -1,18 +1,10 @@
-{ inputs, ... }:
+{ inputs, system, ... }:
 {
-
-  imports = [
-    inputs.nixvim.homeManagerModules.nixvim
-    ./options.nix
-    ./plugins
+  home.packages = [
+    inputs.nixvim.packages.${system}.default
   ];
 
-  programs.nixvim = {
-    enable = true;
-    defaultEditor = true;
-    clipboard.providers.wl-copy.enable = true;
-
-    viAlias = true;
-    vimAlias = true;
+  home.sessionVariables = {
+    EDITOR = "nvim";
   };
 }

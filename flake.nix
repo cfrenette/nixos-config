@@ -33,10 +33,9 @@
       inputs.nixpkgs.follows = "nixos-cosmic/nixpkgs-stable";
     };
 
-    # Nixvim (Neovim configured with nix)
+    # Custom Nixvim Flake 
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:cfrenette/nvim";
     };
 
     # Stylix (Theme management)
@@ -55,6 +54,7 @@
   outputs = { nixpkgs, home-manager, ... } @inputs:
     let
       # Function for NixOS configuration by host
+      # (this is due for a refactor)
       mkHost = hostname: arch:
         nixpkgs.lib.nixosSystem {
           system = "${arch}";
@@ -80,7 +80,10 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   users.cory.imports = [ ./home/cory/${hostname}.nix ];
-                  extraSpecialArgs.inputs = inputs;
+                  extraSpecialArgs = {
+                    inherit inputs;
+                    system = "${arch}";
+                  };
                 };
               }
             ];
