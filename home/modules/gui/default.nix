@@ -12,9 +12,7 @@
   home.packages = with pkgs; [
     bitwarden-desktop
     google-chrome
-    fractal
     ffmpeg
-    mattermost-desktop
     # Community-packaged Discord
     vesktop
   ];
@@ -23,4 +21,3 @@
     NIXOS_OZONE_WL = "1";
   };
 }
-

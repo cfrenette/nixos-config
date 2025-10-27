@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -13,7 +13,10 @@
     brightnessctl
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Set hostname
   networking.hostName = "frmwrk";
@@ -39,7 +42,7 @@
   # Enable firmware update daemon
   services.fwupd.enable = true;
 
-  # Power button behavior 
+  # Power button behavior
   services.logind.powerKey = "suspend";
 
   # Some programs need SUID wrappers, can be configured further or are

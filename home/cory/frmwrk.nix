@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [
-    ../modules/common/fonts.nix
+    ../modules/common
     ../modules/gui
     ../modules/tui
     ./sops.nix
