@@ -43,7 +43,7 @@
   services.fwupd.enable = true;
 
   # Power button behavior
-  services.logind.powerKey = "suspend";
+  services.logind.settings.Login.HandlePowerKey = "suspend";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

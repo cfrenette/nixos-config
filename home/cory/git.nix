@@ -1,15 +1,16 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   # Allow Signing with SSH Key
-  home.file.".ssh/allowed_signers".text = "cory@frenette.dev ${builtins.readFile ./keys/id_ed25519.pub}";
+  home.file.".ssh/allowed_signers".text =
+    "cory@frenette.dev ${builtins.readFile ./keys/id_ed25519.pub}";
 
   programs.git = {
     enable = true;
-    package = pkgs.gitFull;
-
-    userName = "Cory Frenette";
-    userEmail = "cory@frenette.dev";
-
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Cory Frenette";
+        email = "cory@frenette.dev";
+      };
       # Configure SSH Signing
       commit.gpgsign = true;
       gpg.format = "ssh";
@@ -19,6 +20,8 @@
       # Sendemail
       sendemail.sendmailCmd = "${pkgs.msmtp}/bin/sendmail";
     };
+    package = pkgs.gitFull;
+
   };
 
   # Sendmail
@@ -50,4 +53,3 @@
     "users/cory/gmail" = { };
   };
 }
-

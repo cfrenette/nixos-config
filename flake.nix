@@ -4,7 +4,7 @@
   inputs = {
 
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # NixOS Hardware Profiles
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -23,18 +23,19 @@
 
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Custom Nixvim Flake 
+    # Custom Nixvim Flake
     nixvim = {
       url = "github:cfrenette/nvim";
     };
 
     # Stylix (Theme management)
     stylix = {
-      url = "github:danth/stylix/release-25.05";
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Encrypted Secrets Repo
@@ -45,33 +46,34 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, ... } @inputs:
+  outputs =
+    { nixpkgs, home-manager, ... }@inputs:
     let
       # Function for NixOS configuration by host
       # (this is due for a refactor)
-      mkHost = hostname: arch:
+      mkHost =
+        hostname: arch:
         nixpkgs.lib.nixosSystem {
           system = "${arch}";
           specialArgs.inputs = inputs;
-          modules =
-            [
-              # System Configuration
-              ./hosts/${hostname}/configuration.nix
+          modules = [
+            # System Configuration
+            ./hosts/${hostname}/configuration.nix
 
-              # Home Manager Configuration
-              home-manager.nixosModules.home-manager
-              {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  users.cory.imports = [ ./home/cory/${hostname}.nix ];
-                  extraSpecialArgs = {
-                    inherit inputs;
-                    system = "${arch}";
-                  };
+            # Home Manager Configuration
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.cory.imports = [ ./home/cory/${hostname}.nix ];
+                extraSpecialArgs = {
+                  inherit inputs;
+                  system = "${arch}";
                 };
-              }
-            ];
+              };
+            }
+          ];
         };
     in
     {
