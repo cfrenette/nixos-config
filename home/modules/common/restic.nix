@@ -18,8 +18,8 @@ in
         paths = [ "/home/cory" ];
         extraBackupArgs = [ "--exclude=/home/cory/nix-config" ];
         timerConfig = {
-          onCalendar = "daily";
-          persistent = true;
+          OnCalendar = "daily";
+          Persistent = true;
         };
       };
     };
