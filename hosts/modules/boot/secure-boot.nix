@@ -9,7 +9,7 @@
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_12;
+    kernelPackages = pkgs.linuxPackages_6_18;
 
     loader = {
       # Replaced by lanzaboote
