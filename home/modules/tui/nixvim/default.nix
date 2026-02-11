@@ -13,7 +13,7 @@ in
   home.packages = [
     nixvim
     pkgs.beautysh
-    pkgs.nixfmt-rfc-style
+    pkgs.nixfmt
   ];
 
   home.sessionVariables = {
