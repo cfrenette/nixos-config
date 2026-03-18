@@ -9,6 +9,11 @@
     # NixOS Hardware Profiles
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    # Den / Dendritic Nix
+    import-tree.url = "github:vic/import-tree";
+    flake-aspects.url = "github:vic/flake-aspects";
+    den.url = "github:vic/den";
+
     # Secure Boot
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.3";
@@ -49,36 +54,41 @@
   outputs =
     { nixpkgs, home-manager, ... }@inputs:
     let
-      # Function for NixOS configuration by host
-      # (this is due for a refactor)
-      mkHost =
-        hostname: arch:
-        nixpkgs.lib.nixosSystem {
-          system = "${arch}";
+      system = "x86_64-linux";
+      den =
+        (inputs.nixpkgs.lib.evalModules {
+          modules = [ (inputs.import-tree ./modules) ];
           specialArgs.inputs = inputs;
-          modules = [
-            # System Configuration
-            ./hosts/${hostname}/configuration.nix
-
-            # Home Manager Configuration
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.cory.imports = [ ./home/cory/${hostname}.nix ];
-                extraSpecialArgs = {
-                  inherit inputs;
-                  system = "${arch}";
-                };
-              };
-            }
-          ];
-        };
+        }).config;
+      inherit (den.den.hosts.x86_64-linux) frmwrk;
     in
     {
-      nixosConfigurations = {
-        frmwrk = mkHost "frmwrk" "x86_64-linux";
+      nixosConfigurations.frmwrk = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs;
+        };
+        modules = [
+          # System Configuration
+          ./hosts/frmwrk/configuration.nix
+
+          # Home Manager Configuration
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.cory.imports = [ ./home/cory/frmwrk.nix ];
+              extraSpecialArgs = {
+                inherit inputs;
+                inherit system;
+              };
+            };
+          }
+
+          # Modules Migrated to Den
+          frmwrk.mainModule
+        ];
       };
     };
 }
