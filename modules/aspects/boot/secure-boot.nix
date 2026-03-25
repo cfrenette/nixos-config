@@ -6,7 +6,7 @@
       {
         imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
         boot = {
-          kernelPackages = lib.mkForce pkgs.linuxPackages_6_18;
+          kernelPackages = pkgs.linuxPackages_6_18;
           loader = {
             systemd-boot.enable = lib.mkForce false;
             efi.canTouchEfiVariables = true;

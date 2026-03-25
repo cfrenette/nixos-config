@@ -1,15 +1,20 @@
+{ den, ... }:
 {
-  den.aspects.sound = {
-    nixos = {
-      # Enable sound with PipeWire
-      services.pulseaudio.enable = false;
-      security.rtkit.enable = true;
-      services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
+  den.aspects.sound = den.lib.perHost {
+    nixos =
+      { lib, ... }:
+      {
+        services = {
+          pulseaudio.enable = lib.mkDefault false;
+          pipewire = {
+            enable = lib.mkDefault true;
+            alsa.enable = lib.mkDefault true;
+            alsa.support32Bit = lib.mkDefault true;
+            pulse.enable = lib.mkDefault true;
+            wireplumber.enable = lib.mkDefault true;
+          };
+        };
+        security.rtkit.enable = lib.mkDefault true;
       };
-    };
   };
 }
