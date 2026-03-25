@@ -1,7 +1,4 @@
 { inputs, den, ... }:
-let
-  secrets = toString inputs.nix-secrets;
-in
 {
   den.aspects.backups = {
     includes = [
@@ -30,7 +27,7 @@ in
           "users/cory/restic" = { };
           rclone = {
             format = "binary";
-            sopsFile = "${secrets}/rclone.conf";
+            sopsFile = "${inputs.nix-secrets}/rclone.conf";
             path = "/home/cory/.config/rclone/rclone.conf";
           };
         };

@@ -1,9 +1,9 @@
-{ inputs, ... }:
-let
-  secrets = toString inputs.nix-secrets;
-in
+{ inputs, den, ... }:
 {
   den.aspects.mumble = {
+    includes = [
+      den.aspects.sops
+    ];
     homeManager =
       { pkgs, ... }:
       {
@@ -13,7 +13,7 @@ in
 
         sops.secrets.mumble = {
           format = "binary";
-          sopsFile = "${secrets}/mumble.p12";
+          sopsFile = "${inputs.nix-secrets}/mumble.p12";
           path = "/home/cory/.config/Mumble/mumble.p12";
         };
 

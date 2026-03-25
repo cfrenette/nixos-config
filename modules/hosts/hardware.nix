@@ -1,11 +1,33 @@
+{ inputs, ... }:
 {
-  den.aspects.frmwrk-hardware = {
+  flake-file.inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+  den.aspects.hardware._.frmwrk = {
     nixos =
-      { modulesPath, ... }:
       {
+        lib,
+        config,
+        modulesPath,
+        ...
+      }:
+      {
+        boot = {
+          kernelModules = [ "kvm-amd" ];
+          initrd.availableKernelModules = [
+            "nvme"
+            "xhci_pci"
+            "thunderbolt"
+            "usb_storage"
+            "sd_mod"
+          ];
+          kernelParams = [ "boot.shell_on_fail" ];
+          loader.timeout = 0;
+        };
+
+        hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
         imports = [
           (modulesPath + "/installer/scan/not-detected.nix")
+          inputs.nixos-hardware.nixosModules.framework-13-7040-amd
         ];
 
         fileSystems."/" = {

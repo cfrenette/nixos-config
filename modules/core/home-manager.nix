@@ -1,6 +1,13 @@
 { den, lib, ... }:
 {
 
+  flake-file.inputs = {
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
   # Default Home Manager Settings
   den.ctx.hm-host.includes = [ den.aspects.home-manager._.osConfig ];
   den.ctx.hm-user.includes = [ den.aspects.home-manager._.hmConfig ];

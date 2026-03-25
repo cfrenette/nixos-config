@@ -1,5 +1,9 @@
 { inputs, ... }:
 {
+  flake-file.inputs.nixvim = {
+    url = "github:cfrenette/nvim";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   den.aspects.nixvim =
     { host, ... }:
     {

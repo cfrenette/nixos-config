@@ -1,5 +1,9 @@
 { inputs, ... }:
 {
+  flake-file.inputs.stylix = {
+    url = "github:nix-community/stylix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   den.aspects.stylix = {
     nixos =
       { pkgs, config, ... }:

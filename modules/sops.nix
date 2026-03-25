@@ -1,8 +1,15 @@
 { inputs, ... }:
-let
-  secrets = toString inputs.nix-secrets;
-in
 {
+  flake-file.inputs = {
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-secrets = {
+      url = "git+ssh://git@github.com/cfrenette/nix-secrets.git?ref=main&shallow=1";
+      flake = false;
+    };
+  };
   den.aspects.sops = {
     nixos =
       { pkgs, config, ... }:
@@ -20,7 +27,7 @@ in
             generateKey = true;
           };
           # Encrypted Secrets File Path
-          defaultSopsFile = "${secrets}/secrets.yaml";
+          defaultSopsFile = "${inputs.nix-secrets}/secrets.yaml";
           # Encrypted Secret File Format
           defaultSopsFormat = "yaml";
 
@@ -49,7 +56,7 @@ in
         ];
         home.packages = [ pkgs.sops ];
         sops = {
-          defaultSopsFile = "${secrets}/secrets.yaml";
+          defaultSopsFile = "${inputs.nix-secrets}/secrets.yaml";
           age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
         };
       };
