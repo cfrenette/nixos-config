@@ -1,0 +1,34 @@
+{ den, ... }:
+{
+  den.aspects.tpm-unlock = {
+    includes = [
+      den.aspects.secure-boot
+    ];
+    nixos =
+      { pkgs, ... }:
+      {
+        environment.systemPackages = with pkgs; [
+          # systemd-cryptenroll
+          tpm2-tss
+        ];
+        # Enable TPM unlock of LUKS
+        #
+        # Keys must be enabled imperatively - e.g.
+        # sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p2 --tpm2-device=auto --tpm2-pcrs=0+2+7+12
+        security.tpm2.enable = true;
+
+        # TPM kernel module must be enabled for initrd. Device driver is viewable via the command:
+        # sudo systemd-cryptenroll --tpm2-device=list
+        boot.initrd = {
+          systemd = {
+            enable = true;
+            tpm2.enable = true;
+          };
+
+          kernelModules = [
+            "tpm_crb"
+          ];
+        };
+      };
+  };
+}

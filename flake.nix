@@ -4,7 +4,7 @@
   inputs = {
 
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/cda48547b432e8d3b18b4180ba07473762ec8558";
 
     # NixOS Hardware Profiles
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -32,9 +32,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Custom Nixvim Flake
+    # Nixvim
     nixvim = {
       url = "github:cfrenette/nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Stylix (Theme management)
@@ -52,43 +53,9 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }@inputs:
-    let
-      system = "x86_64-linux";
-      den =
-        (inputs.nixpkgs.lib.evalModules {
-          modules = [ (inputs.import-tree ./modules) ];
-          specialArgs.inputs = inputs;
-        }).config;
-      inherit (den.den.hosts.x86_64-linux) frmwrk;
-    in
-    {
-      nixosConfigurations.frmwrk = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-        };
-        modules = [
-          # System Configuration
-          ./hosts/frmwrk/configuration.nix
-
-          # Home Manager Configuration
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.cory.imports = [ ./home/cory/frmwrk.nix ];
-              extraSpecialArgs = {
-                inherit inputs;
-                inherit system;
-              };
-            };
-          }
-
-          # Modules Migrated to Den
-          frmwrk.mainModule
-        ];
-      };
-    };
+    inputs:
+    (inputs.nixpkgs.lib.evalModules {
+      modules = [ (inputs.import-tree ./modules) ];
+      specialArgs.inputs = inputs;
+    }).config.flake;
 }
