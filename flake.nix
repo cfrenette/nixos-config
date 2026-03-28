@@ -25,6 +25,13 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-wsl = {
+      url = "github:nix-community/nixos-wsl";
+      inputs = {
+        flake-compat.follows = "";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     nixpkgs-lib.follows = "nixpkgs";
     nixvim = {
       url = "github:cfrenette/nvim";
