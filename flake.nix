@@ -25,6 +25,13 @@
       flake = false;
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-wsl = {
+      url = "github:nix-community/nixos-wsl";
+      inputs = {
+        flake-compat.follows = "";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     nixpkgs.url = "github:nixos/nixpkgs/cda48547b432e8d3b18b4180ba07473762ec8558";
     nixpkgs-lib.follows = "nixpkgs";
     nixvim = {

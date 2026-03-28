@@ -19,6 +19,7 @@
             nixvim
             pkgs.beautysh
             pkgs.nixfmt
+            pkgs.ripgrep
           ];
           home.sessionVariables = {
             EDITOR = "nvim";
