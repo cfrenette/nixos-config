@@ -14,6 +14,16 @@
       den.aspects.sound
       den.aspects.nixvim
     ];
+    # host-specfic HM config
+    provides.cory = {
+      includes = [
+        den.aspects.ssh
+        den.aspects.backups
+        den.aspects.mumble
+        den.aspects.git._.home
+        den.aspects.gui
+      ];
+    };
     nixos =
       { pkgs, ... }:
       {

@@ -12,6 +12,11 @@
       den.aspects.stylix
       den.aspects.azure-cli
     ];
+    provides.cory = {
+      includes = [
+        den.aspects.git._.work
+      ];
+    };
     wsl.enable = true;
     wsl.defaultUser = "cory";
     nixos =
