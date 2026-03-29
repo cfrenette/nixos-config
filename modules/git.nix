@@ -8,13 +8,14 @@
         settings = {
           user.name = "Cory Frenette";
           commit.gpgsign = true;
+          init.defaultBranch = "main";
         };
-        init.defaultBranch = "main";
       };
     };
     _.home = {
       includes = [
         den.aspects.sops
+        den.aspects.git
       ];
       homeManager =
         { pkgs, config, ... }:
@@ -69,6 +70,9 @@
         };
     };
     _.work = {
+      includes = [
+        den.aspects.git
+      ];
       homeManager =
         { pkgs, ... }:
         {
