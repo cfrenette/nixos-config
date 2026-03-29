@@ -24,6 +24,7 @@
       {
         fileSystems."/".device = "/dev/noroot";
         boot.loader.grub.enable = false;
+        networking.networkmanager.enable = false;
         environment.systemPackages = with pkgs; [
           p7zip
         ];
