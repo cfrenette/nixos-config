@@ -5,7 +5,6 @@
 
   inputs = {
     den.url = "github:vic/den";
-    flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
@@ -25,7 +24,7 @@
       flake = false;
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixpkgs.url = "github:nixos/nixpkgs/cda48547b432e8d3b18b4180ba07473762ec8558";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-lib.follows = "nixpkgs";
     nixvim = {
       url = "github:cfrenette/nvim";
