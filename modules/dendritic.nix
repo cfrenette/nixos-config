@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake-file.inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/cda48547b432e8d3b18b4180ba07473762ec8558";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-file.url = "github:vic/flake-file";
     den.url = "github:vic/den";
   };

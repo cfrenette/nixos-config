@@ -2,7 +2,6 @@
 {
   den.aspects.tui = {
     includes = [
-      den.aspects.shell
       den.aspects.nh
       den.aspects.nixvim
     ];

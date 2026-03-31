@@ -1,6 +1,5 @@
 { den, ... }:
 {
-  den.hosts.x86_64-linux.frmwrk.users.cory = { };
   den.aspects.frmwrk = {
     includes = [
       den.provides.hostname
@@ -17,6 +16,7 @@
     # host-specfic HM config
     provides.cory = {
       includes = [
+        den.aspects.sops
         den.aspects.ssh
         den.aspects.backups
         den.aspects.mumble

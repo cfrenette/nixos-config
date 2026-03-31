@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ den, inputs, ... }:
 {
   flake-file.inputs.stylix = {
     url = "github:nix-community/stylix";
@@ -10,6 +10,10 @@
       {
         imports = [ inputs.stylix.nixosModules.stylix ];
         stylix = {
+          homeManagerIntegration = {
+            autoImport = true;
+            followSystem = true;
+          };
           enable = true;
           polarity = "dark";
           image = ../../assets/wallpapers/fw-laptop-wireframe.png;
@@ -37,8 +41,5 @@
           };
         };
       };
-    homeManager = {
-      stylix.enable = true;
-    };
   };
 }

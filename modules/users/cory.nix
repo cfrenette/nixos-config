@@ -4,7 +4,7 @@
     includes = [
       den.provides.define-user
       den.provides.primary-user
-      den.aspects.sops
+      (den.provides.user-shell "bash")
       den.aspects.fonts
       den.aspects.tui
     ];
