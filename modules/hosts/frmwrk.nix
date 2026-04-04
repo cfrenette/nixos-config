@@ -2,7 +2,6 @@
 {
   den.aspects.frmwrk = {
     includes = [
-      den.provides.hostname
       den.aspects.sops
       den.aspects.hardware._.frmwrk
       den.aspects.laptop

@@ -8,11 +8,7 @@
     };
   };
 
-  # Default Home Manager Settings
-  den.ctx.hm-host.includes = [ den.aspects.home-manager._.osConfig ];
-  den.ctx.hm-user.includes = [ den.aspects.home-manager._.hmConfig ];
-
-  den.aspects.home-manager = {
+  den.aspects.hm-defaults = {
     _.osConfig = den.lib.perHost {
       nixos.home-manager = {
         useUserPackages = lib.mkDefault true;

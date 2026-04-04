@@ -1,6 +1,5 @@
-{ den, ... }:
 {
-  den.aspects.nh = den.lib.perUser {
+  den.aspects.nh = {
     homeManager =
       {
         config,
@@ -25,7 +24,7 @@
         ];
         home.shellAliases = {
           nixc = "nh clean all";
-          nixu = "'nix flake update --flake $flake'";
+          nixu = "'nix flake update --flake $FLAKE'";
           nixb = "nh os build";
           nixs = "nh os switch";
           nixe = "cd $FLAKE && nvim && cd -";

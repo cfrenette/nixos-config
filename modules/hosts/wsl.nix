@@ -1,13 +1,14 @@
-{ den, inputs, ... }:
+{ den, lib, ... }:
 {
   flake-file.inputs.nixos-wsl = {
     url = "github:nix-community/nixos-wsl";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  den.aspects.wsl-nixos = {
+  den.hosts.x86_64-linux.wsl.wsl.enable = true;
+
+  den.aspects.wsl = {
     includes = [
-      den.provides.hostname
       den.aspects.stylix
       den.aspects.azure-cli
     ];
@@ -16,13 +17,9 @@
         den.aspects.git._.work
       ];
     };
-    wsl.enable = true;
     nixos = {
-      imports = [ inputs.nixos-wsl.nixosModules.default ];
-      wsl = {
-        enable = true;
-        wslConf.automount.root = "/mnt";
-      };
+      # imports = [ inputs.nixos-wsl.nixosModules.default ];
+      # wsl.enable = true;
     };
   };
 }
