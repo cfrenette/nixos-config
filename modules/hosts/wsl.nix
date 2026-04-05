@@ -18,8 +18,11 @@
       ];
     };
     nixos = {
-      # imports = [ inputs.nixos-wsl.nixosModules.default ];
-      # wsl.enable = true;
+      # INFO: Windows manages networking
+      networking = {
+        useDHCP = false;
+        wireless.enable = lib.mkForce false;
+      };
     };
   };
 }
