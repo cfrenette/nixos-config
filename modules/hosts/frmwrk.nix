@@ -18,7 +18,6 @@
         den.aspects.sops
         den.aspects.ssh
         den.aspects.backups
-        den.aspects.mumble
         den.aspects.git._.home
         den.aspects.gui
       ];
