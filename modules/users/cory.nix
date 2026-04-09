@@ -7,5 +7,8 @@
       den.aspects.fonts
       den.aspects.tui
     ];
+    nixos = {
+      users.users.cory.description = "Cory Frenette";
+    };
   };
 }
