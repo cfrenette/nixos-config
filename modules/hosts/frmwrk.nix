@@ -10,7 +10,6 @@
       den.aspects.qmk
       den.aspects.stylix
       den.aspects.sound
-      den.aspects.nixvim
     ];
     # host-specfic HM config
     provides.cory = {

@@ -9,6 +9,7 @@
 
   den.aspects.wsl = {
     includes = [
+      den.aspects.sops
       den.aspects.stylix
       den.aspects.azure-cli
     ];
