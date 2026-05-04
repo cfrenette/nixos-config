@@ -73,26 +73,18 @@
       includes = [
         den.aspects.git
       ];
-      homeManager =
-        { pkgs, ... }:
-        {
-          programs.git = {
-            settings = {
-              gpg.format = "openpgp";
-              user = {
-                email = "coryfrenette@montrose-env.com";
-                signingKey = "93996586B9AD42F5EB0B171F69DD71398B944D85";
-              };
+      homeManager = {
+        programs.git = {
+          settings = {
+            gpg.format = "ssh";
+            gpg.ssh.allowedSignersFile = "/home/cory/.ssh/allowed_signers";
+            user = {
+              email = "coryfrenette@onterris.com";
+              signingKey = "/home/cory/.ssh/id_ed25519.pub";
             };
           };
-          services.gpg-agent = {
-            enable = true;
-            noAllowExternalCache = true;
-            verbose = true;
-            pinentry.package = pkgs.pinentry-tty;
-          };
-          home.packages = [ pkgs.pinentry-tty ];
         };
+      };
     };
   };
 }
