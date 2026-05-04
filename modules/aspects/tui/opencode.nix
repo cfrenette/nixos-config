@@ -13,8 +13,8 @@
                 "baseURL" = "http://localhost:11434/v1";
               };
               models = {
-                "gemma4:e4b" = {
-                  name = "Gemma 4 E4B";
+                "gemma4:31b" = {
+                  name = "Gemma 4 31B";
                 };
               };
             };
@@ -23,7 +23,6 @@
           disabled_providers = [ "opencode" ];
         };
       };
-      services.ollama.enable = true;
     };
   };
 }

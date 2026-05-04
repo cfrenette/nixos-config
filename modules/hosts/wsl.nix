@@ -16,6 +16,7 @@
     provides.cory = {
       includes = [
         den.aspects.git._.work
+        den.aspects.opencode
       ];
     };
     nixos = {

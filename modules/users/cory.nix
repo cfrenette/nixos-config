@@ -7,7 +7,6 @@
       (den.provides.user-shell "bash")
       den.aspects.fonts
       den.aspects.tui
-      den.aspects.opencode
     ];
     nixos = {
       users.users.cory.description = "Cory Frenette";
