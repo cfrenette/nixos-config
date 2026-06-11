@@ -13,13 +13,13 @@
                 "baseURL" = "http://localhost:11434/v1";
               };
               models = {
-                "gemma4:31b" = {
-                  name = "Gemma 4 31B";
+                "hf.co/rico03/Qwen3.6-27B-Claude-Opus-Reasoning-Distilled-GGUF:Q4_K_M" = {
+                  name = "rico03/Qwen3.6-27B-Claude-Distill";
                 };
               };
             };
           };
-          model = "ollama/gemma4:e4b";
+          model = "ollama/rico03/Qwen3.6-27B-Claude-Distill";
           disabled_providers = [ "opencode" ];
         };
       };
