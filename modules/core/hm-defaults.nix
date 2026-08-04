@@ -9,7 +9,7 @@
   };
 
   den.aspects.hm-defaults = {
-    _.osConfig = den.lib.perHost {
+    _.osConfig = { host, ... }: {
       nixos.home-manager = {
         useUserPackages = lib.mkDefault true;
         useGlobalPkgs = lib.mkDefault true;

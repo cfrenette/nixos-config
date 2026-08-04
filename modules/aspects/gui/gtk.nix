@@ -1,7 +1,7 @@
 {
   den.aspects.gtk = {
     homeManager =
-      { pkgs, config, ... }:
+      { pkgs, ... }:
       {
         dconf.settings = {
           # "org/gnome/shell" = { favorite-apps = [ "firefox.desktop" "alacritty.desktop" ]; };
@@ -13,7 +13,6 @@
 
         # TODO: Replace
         gtk = {
-          gtk4.theme = config.gtk.theme;
           enable = true;
           iconTheme = {
             package = pkgs.adwaita-icon-theme;

@@ -1,6 +1,6 @@
 { den, ... }:
 {
-  den.aspects.sound = den.lib.perHost {
+  den.aspects.sound = { host, ... }: {
     nixos =
       { lib, ... }:
       {

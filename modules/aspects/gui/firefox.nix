@@ -1,11 +1,17 @@
 {
   den.aspects.firefox = {
     homeManager =
-      { pkgs, ... }:
+      { pkgs, config, ... }:
       {
+        # Workaround until home-manager natively supports XDG Home override
+        home.file.".mozilla/native-messaging-hosts".enable = false;
+
         stylix.targets.firefox.profileNames = [ "cory" ];
         programs.firefox = {
           enable = true;
+
+          # Force new XDG standard configPath
+          configPath = "${config.xdg.configHome}/mozilla/firefox";
 
           profiles.cory = {
             settings = {

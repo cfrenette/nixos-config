@@ -1,6 +1,6 @@
 { den, ... }:
 {
-  den.ctx.host.includes = [
+  den.schema.host.includes = [
     den.aspects.os-defaults._.osConfig
     den.provides.hostname
   ];

@@ -33,6 +33,12 @@
           pattern = "nix";
           command = "setlocal shiftwidth=2";
         }
+        # Exception for java indentation
+        {
+          event = "FileType";
+          pattern = "java";
+          command = "setlocal shiftwidth=2";
+        }
       ];
     };
   };

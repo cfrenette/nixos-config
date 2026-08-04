@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake-file.inputs.lanzaboote = {
-    url = "github:nix-community/lanzaboote/v0.4.3";
+    url = "github:nix-community/lanzaboote/v1.1.0";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   den.aspects.secure-boot = {
@@ -15,11 +15,10 @@
             systemd-boot.enable = lib.mkForce false;
             efi.canTouchEfiVariables = true;
           };
-          bootspec.enable = true;
           lanzaboote = {
             enable = true;
             configurationLimit = 5;
-            pkiBundle = "/etc/secureboot";
+            pkiBundle = "/var/lib/sbctl";
           };
         };
       };

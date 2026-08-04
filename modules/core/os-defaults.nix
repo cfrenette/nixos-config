@@ -1,7 +1,7 @@
 { den, lib, ... }:
 {
   den.aspects.os-defaults = {
-    _.osConfig = den.lib.perHost {
+    _.osConfig = { host, ... }: {
       nixos = {
         nix.settings.experimental-features = lib.mkDefault [
           "nix-command"
