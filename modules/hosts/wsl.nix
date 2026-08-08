@@ -18,6 +18,7 @@
         den.aspects.git._.work
         den.aspects.opencode
         den.aspects.nixvim._.languages._.java
+        den.aspects.nixvim._.languages._.rust
       ];
     };
     nixos = {
