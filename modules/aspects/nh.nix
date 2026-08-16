@@ -18,16 +18,24 @@
           osFlake = lib.mkDefault "${config.home.homeDirectory}/nix-config";
           homeFlake = lib.mkDefault "${config.home.homeDirectory}/nix-config";
         };
-        home.packages = with pkgs; [
-          nix-output-monitor
-          nvd
-        ];
+        home.packages =
+          let
+            nixe = pkgs.writeShellScriptBin "nixe" ''
+              trap "cd \"''${PWD}\"" EXIT
+              cd "$NH_FLAKE" && "$EDITOR"
+            '';
+          in
+          with pkgs;
+          [
+            nix-output-monitor
+            nvd
+            nixe
+          ];
         home.shellAliases = {
           nixc = "nh clean all";
-          nixu = "'nix flake update --flake $FLAKE'";
+          nixu = "nh os build --update";
           nixb = "nh os build";
           nixs = "nh os switch";
-          nixe = "cd $FLAKE && nvim && cd -";
         };
       };
   };
