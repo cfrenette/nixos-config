@@ -18,8 +18,8 @@
         den.aspects.ssh
         den.aspects.backups
         den.aspects.git._.home
+        den.aspects.opencode
         den.aspects.gui
-        den.aspects.nixvim._.languages._.rust
       ];
     };
     nixos =
