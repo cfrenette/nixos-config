@@ -10,24 +10,23 @@
 
         enableDefaultConfig = false;
 
-        matchBlocks = {
+        settings = {
           # Replaces default values (enableDefaultConfig) which will be deprecated
           "*" = {
-            forwardAgent = false;
-            addKeysToAgent = "no";
-            compression = false;
-            serverAliveInterval = 0;
-            serverAliveCountMax = 3;
-            hashKnownHosts = false;
-            userKnownHostsFile = "~/.ssh/known_hosts";
-            controlMaster = "no";
-            controlPath = "~/.ssh/master-%r@%n:%p";
-            controlPersist = "no";
+            ForwardAgent = false;
+            AddKeysToAgent = "no";
+            Compression = false;
+            ServerAliveInterval = 0;
+            ServerAliveCountMax = 3;
+            HashKnownHosts = false;
+            UserKnownHostsFile = "~/.ssh/known_hosts";
+            ControlMaster = "no";
+            ControlPath = "~/.ssh/master-%r@%n:%p";
+            ControlPersist = "no";
           };
-          "GitHub" = {
-            host = "github.com:cfrenette";
-            identitiesOnly = true;
-            identityFile = [
+          "github.com:cfrenette" = {
+            IdentitiesOnly = true;
+            IdentityFile = [
               "/home/cory/.ssh/id_ed25519"
             ];
           };
