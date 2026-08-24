@@ -6,6 +6,11 @@
         programs.alacritty = {
           enable = true;
           settings = {
+            window = {
+              decorations = "None";
+              # Doesn't work on COSMIC yet
+              blur = true;
+            };
             # Override stylix
             font = lib.mkForce {
               size = 10;
