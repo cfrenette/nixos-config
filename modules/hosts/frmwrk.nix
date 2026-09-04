@@ -6,7 +6,7 @@
       den.aspects.hardware._.frmwrk
       den.aspects.laptop
       den.aspects.tpm-unlock
-      den.aspects.cosmic
+      den.aspects.cosmic._.pr556651 # nixpkgs PR #556651 -- TEMPORARY, restore `den.aspects.cosmic` when merged
       den.aspects.qmk
       den.aspects.stylix
       den.aspects.sound
