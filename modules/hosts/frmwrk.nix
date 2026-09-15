@@ -45,7 +45,6 @@
 
         # Enable Bluetooth Support
         hardware.bluetooth.enable = true;
-        services.blueman.enable = true;
 
         # Enable MDNS
         services.avahi = {
