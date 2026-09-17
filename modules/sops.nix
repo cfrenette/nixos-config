@@ -14,6 +14,13 @@
     nixos =
       { pkgs, config, ... }:
       {
+        # Workaround for Mic92/sops-nix#983
+        nixpkgs.overlays = [
+          (final: prev: {
+            buildGo125Module = prev.buildGoModule;
+          })
+        ];
+
         imports = [
           inputs.sops-nix.nixosModules.sops
         ];
