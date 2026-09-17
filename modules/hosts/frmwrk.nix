@@ -6,7 +6,7 @@
       den.aspects.hardware._.frmwrk
       den.aspects.laptop
       den.aspects.tpm-unlock
-      den.aspects.cosmic._.pr556651 # nixpkgs PR #556651 -- TEMPORARY, restore `den.aspects.cosmic` when merged
+      den.aspects.cosmic
       den.aspects.qmk
       den.aspects.stylix
       den.aspects.sound
@@ -50,9 +50,6 @@
         services.avahi = {
           enable = true;
         };
-
-        # Enable PPD (power profiles)
-        services.power-profiles-daemon.enable = true;
 
         # Enable CUPS to print documents.
         services.printing.enable = true;

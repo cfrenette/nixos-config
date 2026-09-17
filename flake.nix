@@ -29,10 +29,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-cosmic-pr = {
-      url = "github:thefossguy/nixpkgs/cosmic-stable-1.7.0";
-      flake = false;
-    };
     nixvim.url = "github:cfrenette/nixvim";
     sops-nix = {
       url = "github:Mic92/sops-nix";
