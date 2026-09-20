@@ -10,6 +10,7 @@
       den.aspects.cloudflare-ddns
       den.aspects.nginx-proxy
       den.aspects.pihole
+      den.aspects.nas
     ];
 
     nixos = {
@@ -29,6 +30,13 @@
         nameservers = [ "127.0.0.1" ];
 
         networkmanager.enable = lib.mkForce false;
+
+        # extraCommands runs after the allowedTCPPorts accepts and before the
+        # final refuse, so a port must be out of that list for a
+        # source-restricted rule to ever be reached.
+        firewall.extraCommands = ''
+          iptables -w -A nixos-fw -p tcp --dport 22 -s 192.168.1.0/24 -j nixos-fw-accept
+        '';
       };
 
       # Pi-hole binds :53. resolved would take it first.
@@ -36,6 +44,8 @@
 
       services.openssh = {
         enable = true;
+        # LAN-only; see networking.firewall.extraCommands above.
+        openFirewall = false;
         settings = {
           PasswordAuthentication = false;
           KbdInteractiveAuthentication = false;

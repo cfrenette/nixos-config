@@ -10,8 +10,8 @@
       {
         services.pihole-ftl = {
           enable = true;
-          openFirewallDNS = true;
-          # The dashboard is only reachable through reverse proxy
+          # LAN-only, via the source-restricted rules below.
+          openFirewallDNS = false;
           openFirewallWebserver = false;
 
           settings = {
@@ -22,10 +22,9 @@
               ];
               # Answer on all interfaces for the local subnet.
               listeningMode = "LOCAL";
-              # Resolve our own name locally: the public *.frenette.dev CNAME
-              # points at the WAN address
               hosts = [
                 "192.168.1.100 pihole.frenette.dev"
+                "192.168.1.100 viktor.frenette.dev"
               ];
             };
             # Allow `pihole-FTL --config` style CLI reads of the API password.
@@ -41,6 +40,11 @@
             }
           ];
         };
+
+        networking.firewall.extraCommands = ''
+          iptables -w -A nixos-fw -p tcp --dport 53 -s 192.168.1.0/24 -j nixos-fw-accept
+          iptables -w -A nixos-fw -p udp --dport 53 -s 192.168.1.0/24 -j nixos-fw-accept
+        '';
 
         sops.secrets."pihole/web-password" = {
           owner = config.services.pihole-ftl.user;
