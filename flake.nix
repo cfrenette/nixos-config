@@ -30,7 +30,6 @@
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixvim.url = "github:cfrenette/nixvim";
-    opencode-pr.url = "github:NixOS/nixpkgs/pull/564101/head";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";

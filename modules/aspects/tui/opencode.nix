@@ -1,14 +1,6 @@
-{ den, inputs, ... }:
+{ den, ... }:
 {
-  flake-file.inputs.opencode-pr = {
-    url = "github:NixOS/nixpkgs/pull/564101/head";
-  };
   den.aspects.opencode = {
-    nixos.nixpkgs.overlays = [
-      (final: prev: {
-        opencode = final.callPackage "${inputs.opencode-pr}/pkgs/by-name/op/opencode/package.nix" { };
-      })
-    ];
     homeManager = {
       programs.opencode = {
         enable = true;
