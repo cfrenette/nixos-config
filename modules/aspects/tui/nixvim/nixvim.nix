@@ -13,11 +13,14 @@
         inputs'.nixvim.packages.default
       ];
 
-      stylix.targets.nixvim.enable = false;
-
       home.sessionVariables = {
         EDITOR = "nvim";
       };
     };
   };
+
+  # Disable stylix on hosts that use it so the Nixvim theme is used.
+  den.aspects.stylix.nixos.home-manager.sharedModules = [
+    { stylix.targets.nixvim.enable = false; }
+  ];
 }

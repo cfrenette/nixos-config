@@ -2,7 +2,7 @@
 {
   den.aspects.frmwrk = {
     includes = [
-      den.aspects.sops
+      den.aspects.sops._.userKey
       den.aspects.hardware._.frmwrk
       den.aspects.laptop
       den.aspects.tpm-unlock
@@ -15,6 +15,7 @@
     provides.cory = {
       includes = [
         den.aspects.sops
+        den.aspects.tui
         den.aspects.ssh
         den.aspects.backups
         den.aspects.git._.home

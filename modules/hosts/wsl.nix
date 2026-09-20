@@ -9,12 +9,13 @@
 
   den.aspects.wsl = {
     includes = [
-      den.aspects.sops
+      den.aspects.sops._.userKey
       den.aspects.stylix
       den.aspects.azure-cli
     ];
     provides.cory = {
       includes = [
+        den.aspects.tui
         den.aspects.git._.work
         den.aspects.opencode
       ];

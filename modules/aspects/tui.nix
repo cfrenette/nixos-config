@@ -1,16 +1,11 @@
 { den, ... }:
 {
+  # Full interactive terminal environment.
   den.aspects.tui = {
     includes = [
+      den.aspects.headless
       den.aspects.nh
-      den.aspects.nixvim
+      den.aspects.fonts
     ];
-    homeManager =
-      { pkgs, ... }:
-      {
-        home.packages = with pkgs; [
-          ripgrep
-        ];
-      };
   };
 }

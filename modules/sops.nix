@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ den, inputs, ... }:
 {
   flake-file.inputs = {
     sops-nix = {
@@ -25,14 +25,6 @@
           inputs.sops-nix.nixosModules.sops
         ];
         sops = {
-          # Decrypt Keys
-          age = {
-            keyFile = "/home/cory/.config/sops/age/keys.txt";
-            sshKeyPaths = [ "/home/cory/.ssh/id_ed25519" ];
-            # If the key doesn't exist in the age key file,
-            # generate one from the ssh key
-            generateKey = true;
-          };
           # Encrypted Secrets File Path
           defaultSopsFile = "${inputs.nix-secrets}/secrets.yaml";
           # Encrypted Secret File Format
@@ -67,5 +59,27 @@
           age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
         };
       };
+
+    _.userKey = {
+      includes = [ den.aspects.sops ];
+      nixos.sops.age = {
+        keyFile = "/home/cory/.config/sops/age/keys.txt";
+        sshKeyPaths = [ "/home/cory/.ssh/id_ed25519" ];
+        # If the key doesn't exist in the age key file,
+        # generate one from the ssh key
+        generateKey = true;
+      };
+    };
+
+    # Decrypt with the host's SSH key, for hosts where no human logs in to
+    # deploy. Add the host as a recipient with:
+    #   ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
+    _.hostKey = {
+      includes = [ den.aspects.sops ];
+      nixos.sops.age = {
+        sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+        generateKey = false;
+      };
+    };
   };
 }
