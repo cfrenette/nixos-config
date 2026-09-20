@@ -18,8 +18,12 @@
           services.restic.enable = true;
           services.restic.backups.nas = {
             repository = "/mnt/nas/${user.userName}/backups/${host.name}";
-            # Repo is created by hand; see AGENTS.md.
-            initialize = false;
+            initialize = true;
+            # initialize would otherwise create a fresh local repo on the root
+            # filesystem if the automount is ever stopped, and back up into it
+            # silently. Fails the unit instead; `mountpoint -q` still triggers
+            # the automount, so this only fires when the path is really bare.
+            backupPrepareCommand = "${pkgs.util-linux}/bin/mountpoint -q /mnt/nas/${user.userName}";
             passwordFile = config.sops.secrets."users/${user.userName}/restic".path;
             paths = [ config.home.homeDirectory ];
             extraBackupArgs = [
