@@ -25,6 +25,8 @@
               hosts = [
                 "192.168.1.100 pihole.frenette.dev"
                 "192.168.1.100 viktor.frenette.dev"
+                # Backend - direct to the NAS
+                "192.168.1.150 nas.frenette.dev"
               ];
             };
             # Allow `pihole-FTL --config` style CLI reads of the API password.

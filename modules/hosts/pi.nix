@@ -10,7 +10,7 @@
       den.aspects.cloudflare-ddns
       den.aspects.nginx-proxy
       den.aspects.pihole
-      den.aspects.nas
+      den.aspects.nas._.web
     ];
 
     nixos = {
