@@ -21,9 +21,14 @@
             initialize = true;
             # initialize would otherwise create a fresh local repo on the root
             # filesystem if the automount is ever stopped, and back up into it
-            # silently. Fails the unit instead; `mountpoint -q` still triggers
-            # the automount, so this only fires when the path is really bare.
-            backupPrepareCommand = "${pkgs.util-linux}/bin/mountpoint -q /mnt/nas/${user.userName}";
+            # silently. Fail the unit instead. `mountpoint -q` is not enough:
+            # the autofs placeholder satisfies it without triggering the real
+            # mount, so read the directory to trigger it and then insist on an
+            # actual cifs filesystem being there.
+            backupPrepareCommand = ''
+              ${pkgs.coreutils}/bin/ls /mnt/nas/${user.userName}/ >/dev/null 2>&1 || true
+              ${pkgs.util-linux}/bin/findmnt -n -t cifs --mountpoint /mnt/nas/${user.userName} >/dev/null
+            '';
             passwordFile = config.sops.secrets."users/${user.userName}/restic".path;
             paths = [ config.home.homeDirectory ];
             extraBackupArgs = [
@@ -45,8 +50,20 @@
 
           sops.secrets."users/${user.userName}/restic" = { };
 
-          # A user timer that fails is otherwise completely silent.
-          systemd.user.services.restic-backups-nas.Unit.OnFailure = [ "restic-failed.service" ];
+          # `Persistent` fires the missed run at login, which on a laptop is
+          # before Wi-Fi is up, so the first attempt fails. Retry every 15
+          # minutes for up to ~90 minutes.
+          systemd.user.services.restic-backups-nas = {
+            Unit = {
+              OnFailure = [ "restic-failed.service" ];
+              StartLimitIntervalSec = "3h";
+              StartLimitBurst = 6;
+            };
+            Service = {
+              Restart = "on-failure";
+              RestartSec = "15min";
+            };
+          };
           systemd.user.services.restic-failed = {
             Unit.Description = "Notify that the restic backup failed";
             Service = {

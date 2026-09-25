@@ -13,15 +13,28 @@
     {
       includes = [ den.aspects.sops ];
       nixos =
-        { config, ... }:
+        { config, utils, ... }:
+        let
+          mountPoint = "/mnt/nas/${user.userName}";
+        in
         {
           sops.secrets."users/${user.userName}/nas-smb" = { };
+
+          # A burst of failed triggers trips the default StartLimitBurst=5/10s
+          # Make every access retry
+          systemd.units."${utils.escapeSystemdPath mountPoint}.mount" = {
+            overrideStrategy = "asDropin";
+            text = ''
+              [Unit]
+              StartLimitIntervalSec=0
+            '';
+          };
 
           boot.supportedFilesystems.cifs = true;
 
           # Outside the home directory on purpose: a mount under ~ would sit
           # inside restic's backup path and the repo would back itself up.
-          fileSystems."/mnt/nas/${user.userName}" = {
+          fileSystems.${mountPoint} = {
             device = "//nas.frenette.dev/personal_folder";
             fsType = "cifs";
             options = [
