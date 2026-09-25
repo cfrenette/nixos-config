@@ -19,6 +19,8 @@
               "media.hardware-video-decoding.force-enabled" = true;
               "signon.rememberSignons" = false;
               "identity.fxaccounts.enabled" = true;
+              # Disable DNS over HTTPS
+              "network.trr.mode" = 5;
             };
             search = {
               # Firefox tweaks this setting a lot, necessary to wipe tweaks and regenerate
