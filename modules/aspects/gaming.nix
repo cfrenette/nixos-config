@@ -11,6 +11,10 @@
 
         # Proton 10+ prefers ntsync over esync/fsync when /dev/ntsync exists.
         boot.kernelModules = [ "ntsync" ];
+
+        environment.systemPackages = with pkgs; [
+          r2modman
+        ];
       };
   };
 }
