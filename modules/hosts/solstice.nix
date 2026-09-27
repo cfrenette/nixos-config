@@ -10,6 +10,7 @@
       den.aspects.qmk
       den.aspects.stylix
       den.aspects.sound
+      den.aspects.gaming
     ];
     provides.cory = {
       includes = [
