@@ -127,8 +127,10 @@
                 content = {
                   type = "luks";
                   name = "cryptroot";
-                  # Consumed at install time only; see --disk-encryption-keys.
-                  passwordFile = "/tmp/luks.key";
+                  # Read once at format time. This is the path disko's --vm-test
+                  # plants a dummy key at; the real install supplies it with
+                  # --disk-encryption-keys.
+                  passwordFile = "/tmp/secret.key";
                   settings.allowDiscards = true;
                   content = {
                     type = "filesystem";
