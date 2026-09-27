@@ -5,6 +5,7 @@
       den.aspects.sops._.userKey
       den.aspects.hardware._.solstice
       den.aspects.workstation
+      den.aspects.tpm-unlock
       den.aspects.cosmic
       den.aspects.qmk
       den.aspects.stylix
