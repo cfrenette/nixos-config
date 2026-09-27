@@ -1,6 +1,13 @@
 { inputs, ... }:
 {
-  flake-file.inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+  flake-file.inputs = {
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
   # Framework Laptop 13 AMD 7040U
   den.aspects.hardware._.frmwrk = {
     nixos =
@@ -52,6 +59,87 @@
 
         swapDevices = [ { device = "/dev/disk/by-uuid/fdd7cd38-e98c-44ab-b665-5e75bbad9d1a"; } ];
 
+      };
+  };
+
+  # AMD Desktop
+  den.aspects.hardware._.solstice = {
+    nixos =
+      {
+        lib,
+        config,
+        modulesPath,
+        ...
+      }:
+      {
+        imports = [
+          (modulesPath + "/installer/scan/not-detected.nix")
+          inputs.disko.nixosModules.disko
+          inputs.nixos-hardware.nixosModules.common-cpu-amd
+          inputs.nixos-hardware.nixosModules.common-gpu-amd
+          inputs.nixos-hardware.nixosModules.common-pc-ssd
+        ];
+
+        boot = {
+          kernelModules = [ "kvm-amd" ];
+          initrd.availableKernelModules = [
+            "nvme"
+            "xhci_pci"
+            "ahci"
+            "usbhid"
+            "usb_storage"
+            "sd_mod"
+          ];
+          kernelParams = [ "boot.shell_on_fail" ];
+          loader = {
+            # mkDefault so secure-boot's mkForce false replaces it.
+            systemd-boot.enable = lib.mkDefault true;
+            efi.canTouchEfiVariables = true;
+            timeout = 0;
+          };
+        };
+
+        hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+        zramSwap.enable = true;
+
+        disko.devices.disk.main = {
+          type = "disk";
+          device = "/dev/nvme0n1";
+          content = {
+            type = "gpt";
+            partitions = {
+              ESP = {
+                size = "1G";
+                type = "EF00";
+                content = {
+                  type = "filesystem";
+                  format = "vfat";
+                  mountpoint = "/boot";
+                  mountOptions = [
+                    "fmask=0022"
+                    "dmask=0022"
+                  ];
+                };
+              };
+              luks = {
+                size = "100%";
+                content = {
+                  type = "luks";
+                  name = "cryptroot";
+                  # Consumed at install time only; see --disk-encryption-keys.
+                  passwordFile = "/tmp/luks.key";
+                  settings.allowDiscards = true;
+                  content = {
+                    type = "filesystem";
+                    format = "ext4";
+                    mountpoint = "/";
+                  };
+                };
+              };
+            };
+          };
+        };
       };
   };
 

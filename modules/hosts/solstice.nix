@@ -1,17 +1,15 @@
 { den, ... }:
 {
-  den.aspects.frmwrk = {
+  den.aspects.solstice = {
     includes = [
       den.aspects.sops._.userKey
-      den.aspects.hardware._.frmwrk
-      den.aspects.laptop
-      den.aspects.tpm-unlock
+      den.aspects.hardware._.solstice
+      den.aspects.workstation
       den.aspects.cosmic
       den.aspects.qmk
       den.aspects.stylix
       den.aspects.sound
     ];
-    # host-specfic HM config
     provides.cory = {
       includes = [
         den.aspects.sops
@@ -23,16 +21,8 @@
         den.aspects.gui
       ];
     };
-    nixos =
-      { pkgs, ... }:
-      {
-        environment.systemPackages = with pkgs; [
-          # TODO: remove these, used in bootstrapping
-          p7zip
-          wget
-        ];
-
-        services.hardware.bolt.enable = true;
-      };
+    nixos = {
+      system.stateVersion = "26.05";
+    };
   };
 }

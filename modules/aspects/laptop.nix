@@ -1,25 +1,19 @@
+{ den, ... }:
 {
   den.aspects.laptop = {
-    nixos = {
-      # Configure keymap
-      services = {
-        xserver = {
-          enable = true;
-          xkb.layout = "us";
+    includes = [ den.aspects.workstation ];
+    nixos =
+      { pkgs, ... }:
+      {
+        services.libinput.touchpad = {
+          tapping = false;
+          clickMethod = "clickfinger";
+          naturalScrolling = true;
         };
-        libinput = {
-          enable = true;
-          # disable mouse acceleration
-          mouse = {
-            accelProfile = "flat";
-          };
-          touchpad = {
-            tapping = false;
-            clickMethod = "clickfinger";
-            naturalScrolling = true;
-          };
-        };
+
+        services.logind.settings.Login.HandlePowerKey = "suspend";
+
+        environment.systemPackages = [ pkgs.brightnessctl ];
       };
-    };
   };
 }
