@@ -33,6 +33,7 @@
             paths = [ config.home.homeDirectory ];
             extraBackupArgs = [
               "--exclude=${config.home.homeDirectory}/nix-config"
+              "--exclude=${config.home.homeDirectory}/.local/share/Steam/steamapps"
               "--exclude-caches"
             ];
             pruneOpts = [
@@ -62,6 +63,9 @@
             Service = {
               Restart = "on-failure";
               RestartSec = "15min";
+              # restic exits 3 when the snapshot was saved but some files
+              # vanished mid-read. The backup is valid, so don't retry or notify.
+              SuccessExitStatus = [ 3 ];
             };
           };
           systemd.user.services.restic-failed = {
