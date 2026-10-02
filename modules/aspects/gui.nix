@@ -11,7 +11,6 @@
       {
         home.packages = with pkgs; [
           bitwarden-desktop
-          google-chrome
           ffmpeg
           vesktop
         ];
