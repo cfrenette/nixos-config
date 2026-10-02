@@ -22,26 +22,12 @@
           services.restic.backups.nas = {
             repository = "/mnt/nas/${user.userName}/backups/${host.name}";
             initialize = true;
-            # initialize would otherwise create a fresh local repo on the root
-            # filesystem if the automount is ever stopped, and back up into it
-            # silently. Fail the unit instead. `mountpoint -q` is not enough:
-            # the autofs placeholder satisfies it without triggering the real
-            # mount, so read the directory to trigger it and then insist on an
-            # actual cifs filesystem being there.
-            #
-            # A run killed mid-`check`/`prune` (shutdown while CIFS is going
-            # away) leaves an exclusive lock. restic never clears locks on
-            # age inside normal commands; `unlock` is the designated operation
-            # and removes only stale ones (>30 min, or a dead PID on this
-            # host), so a live manual `restic-nas` session is left alone. The
-            # HM module does run `unlock`, but after `backup`, which is
-            # unreachable once the `cat config || init` probe in ExecStartPre
-            # hits the lock. Probe with --no-lock so a brand-new host still
-            # falls through to `init`, and keep this after the mount guard so
-            # it never runs against a bare directory.
+            # Make sure nas is actually mounted before backing up and
+            # unlock stale locks leftover from an interrupted backup
             backupPrepareCommand = ''
-              ${pkgs.coreutils}/bin/ls /mnt/nas/${user.userName}/ >/dev/null 2>&1 || true
-              ${pkgs.util-linux}/bin/findmnt -n -t cifs --mountpoint /mnt/nas/${user.userName} >/dev/null
+              set -euo pipefail
+              ${pkgs.coreutils}/bin/ls /mnt/nas/${user.userName}/ >/dev/null || true
+              ${pkgs.util-linux}/bin/findmnt -n -t cifs --mountpoint /mnt/nas/${user.userName}
               if ${restic} cat config --no-lock >/dev/null 2>&1; then
                 ${restic} unlock
               fi
