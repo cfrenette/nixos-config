@@ -14,6 +14,9 @@
       ];
       homeManager =
         { config, pkgs, ... }:
+        let
+          restic = "${config.services.restic.backups.nas.package}/bin/restic";
+        in
         {
           services.restic.enable = true;
           services.restic.backups.nas = {
@@ -25,9 +28,23 @@
             # the autofs placeholder satisfies it without triggering the real
             # mount, so read the directory to trigger it and then insist on an
             # actual cifs filesystem being there.
+            #
+            # A run killed mid-`check`/`prune` (shutdown while CIFS is going
+            # away) leaves an exclusive lock. restic never clears locks on
+            # age inside normal commands; `unlock` is the designated operation
+            # and removes only stale ones (>30 min, or a dead PID on this
+            # host), so a live manual `restic-nas` session is left alone. The
+            # HM module does run `unlock`, but after `backup`, which is
+            # unreachable once the `cat config || init` probe in ExecStartPre
+            # hits the lock. Probe with --no-lock so a brand-new host still
+            # falls through to `init`, and keep this after the mount guard so
+            # it never runs against a bare directory.
             backupPrepareCommand = ''
               ${pkgs.coreutils}/bin/ls /mnt/nas/${user.userName}/ >/dev/null 2>&1 || true
               ${pkgs.util-linux}/bin/findmnt -n -t cifs --mountpoint /mnt/nas/${user.userName} >/dev/null
+              if ${restic} cat config --no-lock >/dev/null 2>&1; then
+                ${restic} unlock
+              fi
             '';
             passwordFile = config.sops.secrets."users/${user.userName}/restic".path;
             paths = [ config.home.homeDirectory ];
