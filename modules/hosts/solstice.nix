@@ -11,6 +11,7 @@
       den.aspects.stylix
       den.aspects.sound
       den.aspects.gaming
+      den.aspects.binfmt._.aarch64
     ];
     provides.cory = {
       includes = [

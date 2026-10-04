@@ -8,6 +8,17 @@
     nixos =
       { config, ... }:
       {
+        # FTL hard-codes -Werror and GCC 16 flags an unused loop counter in
+        # src/config/validator.c. Drop once FTL > 6.7.1 or nixpkgs fixes it.
+        nixpkgs.overlays = [
+          (final: prev: {
+            pihole-ftl = prev.pihole-ftl.overrideAttrs (old: {
+              env.NIX_CFLAGS_COMPILE =
+                toString (old.env.NIX_CFLAGS_COMPILE or "") + " -Wno-error=unused-but-set-variable";
+            });
+          })
+        ];
+
         services.pihole-ftl = {
           enable = true;
           # LAN-only, via the source-restricted rules below.

@@ -186,8 +186,6 @@
           deviceTreeOverlays.all = lib.mkForce [ ];
 
           settings.all = {
-            # Firmware low-voltage/overtemperature warnings corrupt the
-            # framebuffer the mainline kernel set up.
             avoid_warnings = true;
             # Display/camera autodetection is pointless headless
             camera_auto_detect = lib.mkForce null;
@@ -212,12 +210,11 @@
           };
         };
 
-        # 1GB of RAM is not enough to build
         zramSwap.enable = true;
         swapDevices = [
           {
             device = "/var/swapfile";
-            size = 4096;
+            size = 1024;
           }
         ];
       };
