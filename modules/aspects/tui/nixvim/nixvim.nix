@@ -2,6 +2,7 @@
 {
   flake-file.inputs.nixvim = {
     url = "github:cfrenette/nixvim";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   den.default.includes = [ den.batteries.inputs' ];
