@@ -6,7 +6,7 @@
         enable = true;
         settings = {
           "$schema" = "https://opencode.ai/config.json";
-          plugin = [ "@ex-machina/opencode-anthropic-auth@1.8.6" ];
+          plugin = [ "@ex-machina/opencode-anthropic-auth@next" ];
           lsp = { };
           disabled_providers = [ "opencode" ];
         };
