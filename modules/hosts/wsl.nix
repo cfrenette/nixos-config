@@ -11,7 +11,6 @@
     includes = [
       den.aspects.sops._.userKey
       den.aspects.stylix
-      den.aspects.azure-cli
     ];
     provides.cory = {
       includes = [
