@@ -20,10 +20,7 @@
         # TPM kernel module must be enabled for initrd. Device driver is viewable via the command:
         # sudo systemd-cryptenroll --tpm2-device=list
         boot.initrd = {
-          systemd = {
-            enable = true;
-            tpm2.enable = true;
-          };
+          systemd.tpm2.enable = true;
 
           kernelModules = [
             "tpm_crb"
