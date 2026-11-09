@@ -29,6 +29,9 @@
       {
         system.stateVersion = "26.05";
 
+        # System76-power doesn't persist the selected profile across reboots.
+        services.power-profiles-daemon.enable = true;
+
         # Lets OpenRGB reach the SMBus/i2c controllers the firmware reserves.
         boot = {
           kernelModules = [ "i2c-dev" ];
