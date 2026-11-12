@@ -9,16 +9,12 @@
   };
 
   den.aspects.hm-defaults = {
-    _.osConfig = { host, ... }: {
-      nixos.home-manager = {
-        useUserPackages = lib.mkDefault true;
-        useGlobalPkgs = lib.mkDefault true;
-        backupFileExtension = lib.mkDefault "backup";
-        overwriteBackup = lib.mkDefault true;
-      };
+    _.osConfig.nixos.home-manager = {
+      useUserPackages = lib.mkDefault true;
+      useGlobalPkgs = lib.mkDefault true;
+      backupFileExtension = lib.mkDefault "backup";
+      overwriteBackup = lib.mkDefault true;
     };
-    _.hmConfig = {
-      homeManager.home.stateVersion = lib.mkDefault "24.05";
-    };
+    _.hmConfig.homeManager.home.stateVersion = lib.mkDefault "24.05";
   };
 }
