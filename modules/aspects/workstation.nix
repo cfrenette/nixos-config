@@ -12,7 +12,10 @@
           enable = true;
           mouse.accelProfile = "flat";
         };
-        avahi.enable = true;
+        avahi = {
+          enable = true;
+          nssmdns4 = true;
+        };
         printing.enable = true;
         fwupd.enable = true;
       };
